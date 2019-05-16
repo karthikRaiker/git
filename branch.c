@@ -338,10 +338,11 @@ void create_branch(struct repository *r,
 	free(real_ref);
 }
 
-void remove_branch_state(struct repository *r)
+void remove_branch_state(struct repository *r, int verbose)
 {
-	sequencer_post_commit_cleanup(r);
-	unlink(git_path_merge_head(r));
+	sequencer_post_commit_cleanup(r, verbose);
+	if (!unlink(git_path_merge_head(r)) && verbose)
+		warning(_("cancelling a merge in progress"));
 	unlink(git_path_merge_rr(r));
 	unlink(git_path_merge_msg(r));
 	unlink(git_path_merge_mode(r));
