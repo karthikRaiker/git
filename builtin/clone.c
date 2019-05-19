@@ -1244,7 +1244,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
 	transport_disconnect(transport);
 
 	if (option_dissociate) {
-		close_all_packs(the_repository->objects);
+		close_object_store(the_repository->objects);
 		dissociate_from_references();
 	}
 
